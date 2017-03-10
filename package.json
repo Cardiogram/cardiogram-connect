@@ -29,13 +29,13 @@
     "heroku-client": "^3.0.0-beta2",
     "pg": "6.1.0",
     "pg-hstore": "^2.3.2",
+    "request": "2.75.0",
     "sequelize": "3.24.3",
     "sequelize-cli": "2.3.0",
     "underscore": "1.8.3"
   },
   "devDependencies": {
     "mocha": "3.1.2",
-    "request": "2.75.0",
     "restify": "4.0.3"
   }
 }

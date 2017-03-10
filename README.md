@@ -51,8 +51,8 @@ following API endpoints on behalf of that particular user.
 # API Endpoints
 
 ## Basic User Info: /oauth/basic_info
-Once you have an access token, you can get basic profile information, such as the user's timezone
-by issuing an HTTP get request to /oauth/basic_info:
+Once you have an access token, you can get basic profile information by issuing an HTTP GET
+request to /oauth/basic_info:
 
 ```
 GET https://cardiogr.am/oauth/basic_info
