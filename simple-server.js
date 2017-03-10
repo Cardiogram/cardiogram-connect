@@ -4,7 +4,7 @@ var request = require('request').defaults({jar: true});
 
 function SimpleServer(clientSecret) {
   this.baseUri = 'http://heartai-dev.herokuapp.com';
-  this.clientId = 'CardiogramConnectDemo_Local';  // must match index.html
+  this.clientId = 'CardiogramConnectDemo_Dev';  // must match index.html
   this.clientSecret = clientSecret;
 };
 
