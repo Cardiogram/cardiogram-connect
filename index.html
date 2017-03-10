@@ -1,0 +1,58 @@
+<html>
+<head>
+  <title>Cardiogram Connect Test Server</title>
+  <style>
+  	.button {
+  	  background-color: #7ACA39;
+  	  border-radius: 2px;
+  	  color: #fff;
+  	  font-weight: 600;
+      padding: 20px;
+      text-decoration: none;
+  	}
+
+    .main {
+      font-family: 'graphik', 'Avenir Next', sans-serif;
+      margin: 40px 40px 40px 140px;
+      font-weight: 300;
+      line-height: 140%;
+    }
+
+    .subtle {
+      color: #777;
+    }
+
+    body {
+      background-image: url('img/background.png');
+      background-repeat: no-repeat;    
+    }
+  </style>
+</head>
+
+<body>
+  <div class='main'>
+  	<h2>Kai's Heart-Rate Spikin' Ice Cream Truck</h2>
+    <div class='subtle'>
+      We're trying to figure out which ice cream flavors get your heart rate racing. Click
+      below to connect your Cardiogram account.
+    </div>
+
+    <br/>
+
+    <div class='main-text'>
+      <b>Note</b>: this is a demo server to show how the Cardiogram Connect partner
+      API works. If you're here and don't know what Cardiogram Connect is, then email
+      connect@cardiogr.am.
+    </div>
+
+    <br/>
+    <br/>
+    <br/>
+
+    <center>
+    	<a class='button' href="https://heartai-dev.herokuapp.com/auth?response_type=code&client_id=CardiogramConnectDemo_Local&redirect_uri=http://127.0.0.1:9000/oauth/callback">
+    	  Connect with Cardiogram
+    	</a>
+    </center>
+  </div>
+</body>
