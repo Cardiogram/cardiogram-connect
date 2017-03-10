@@ -25,6 +25,7 @@ SimpleServer.prototype.startServer = function(port, cb) {
 
   // The below snippet of code shows you to exchange the auth code for an auth token.
   this.server.get('/oauth/callback', function(req, res) {
+    console.log('Received auth code...');
     var code = req.query.code;
     if (!!req.query.error) {
       res.json({message: 'Error in redirect: ' + req.query.error});
@@ -32,12 +33,18 @@ SimpleServer.prototype.startServer = function(port, cb) {
       res.json({message: 'Error, invalid auth code: '});
     }
     self.exchangeAuthCodeForTokens(code, (err, accessToken, refreshToken) => {
+      console.log('Received auth tokens...');
       if (!!err) {
         res.json({message: 'Error exchanging code for tokens', err: JSON.stringify(err)});
       } else {
         self.getMetrics(accessToken, (err, metrics) => {
+          console.log('Received response from metrics endpoint...');
+          console.log(err);
+          console.log(metrics);
           if (!!err) {
-            res.json({message: 'Error getting metrics', err: err})
+            res.json({message: 'Error reaching API', err: err})
+          } else if (!!metrics.err) {
+            res.json({message: 'Error from API', err: metrics.err})
           } else {
             res.json({message: 'Success! Everything is working.', metrics: metrics});
           }
