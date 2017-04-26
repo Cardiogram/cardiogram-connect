@@ -78,7 +78,7 @@ SimpleServer.prototype.exchangeAuthCodeForTokens = function(authCode, cb) {
       console.log(err);
       return cb(err);
     } else if (httpResponse.statusCode !== 200) {
-      console.log('non-200 status code: ' + httpResponse.statusCode);
+      console.log('non-200 status code: ' + httpResponse.statusCode + ': ' + JSON.stringify(body));
       return cb(new Error('HTTP code ' + httpResponse.statusCode + ': ' + JSON.stringify(body)));
     } else {
       tokens = JSON.parse(body)
