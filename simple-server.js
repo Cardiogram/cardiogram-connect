@@ -91,8 +91,11 @@ SimpleServer.prototype.exchangeAuthCodeForTokens = function(authCode, cb) {
  * Get a JSON map of the user's metrics.
  */
 SimpleServer.prototype.getMetrics = function(accessToken, cb) {
+  var nowMillis = Date.now();
+  var lastWeekMillis = now - 7 * 86400 * 1000;
+
   request.get({
-    url: this.baseUri + '/heart/oauth/metrics',
+    url: this.baseUri + '/heart/oauth/metrics/' + lastWeekMillis + '-' + nowMillis,
     headers: {
       Authorization: 'Authorization: Bearer ' + accessToken,
     }
