@@ -92,7 +92,7 @@ SimpleServer.prototype.exchangeAuthCodeForTokens = function(authCode, cb) {
  */
 SimpleServer.prototype.getMetrics = function(accessToken, cb) {
   var nowMillis = Date.now();
-  var lastWeekMillis = now - 7 * 86400 * 1000;
+  var lastWeekMillis = nowMillis - 7 * 86400 * 1000;
 
   request.get({
     url: this.baseUri + '/heart/oauth/metrics/' + lastWeekMillis + '-' + nowMillis,
