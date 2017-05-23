@@ -37,6 +37,12 @@ SimpleServer.prototype.startServer = function(port, cb) {
       if (!!err) {
         res.json({message: 'Error exchanging code for tokens', err: JSON.stringify(err)});
       } else {
+
+        self.refreshAccessToken(refreshToken, (err, accessToken) => {
+          console.log('refreshed, err=' + err + ' at=' + accessToken);
+        });
+        return;
+
         self.getMetrics(accessToken, (err, metrics) => {
           console.log('Received response from metrics endpoint...');
           console.log(err);
