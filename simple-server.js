@@ -88,6 +88,40 @@ SimpleServer.prototype.exchangeAuthCodeForTokens = function(authCode, cb) {
 };
 
 /**
+ * Get a new accessToken, given a refreshToken that was previously obtained via
+ * exchangeAuthCodeForTokens.
+ */
+SimpleServer.prototype.refreshAccessToken = function(refreshToken, cb) {
+  var authorizationHeader = 'Basic ' + this._base64Encode(this.clientId + ':' + this.clientSecret);
+  request.post({
+    url: this.baseUri + '/heart/oauth/token',
+    headers: {
+      Authorization: authorizationHeader,
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    form: {
+      grant_type: 'refresh_token',
+      client_id: this.clientId,
+      client_secret: this.clientSecret,
+      refresh_token: refreshToken,
+    },
+  }, (err, httpResponse, body) => {
+    if (!!err) {
+      console.log(err);
+      return cb(err);
+    } else if (httpResponse.statusCode !== 200) {
+      console.log('non-200 status code: ' + httpResponse.statusCode + ': ' + JSON.stringify(body));
+      return cb(new Error('HTTP code ' + httpResponse.statusCode + ': ' + JSON.stringify(body)));
+    } else {
+      tokens = JSON.parse(body)
+      console.log('== tokens ==');
+      console.log(tokens);
+      return cb(null, tokens['access_token']);
+    }
+  });
+};
+
+/**
  * Get a JSON map of the user's metrics.
  */
 SimpleServer.prototype.getMetrics = function(accessToken, cb) {
