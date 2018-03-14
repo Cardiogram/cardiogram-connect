@@ -4,7 +4,7 @@ var request = require('request').defaults({jar: true});
 
 function SimpleServer(clientSecret) {
   this.baseUri = 'https://cardiogr.am';
-  this.clientId = 'CardiogramConnectDemo_Prod';  // must match index.html
+  this.clientId = 'CardiogramConnectDemo_Prod';   // Note: must match index.html
   this.clientSecret = clientSecret;
 };
 

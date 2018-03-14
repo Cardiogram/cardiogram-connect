@@ -70,7 +70,7 @@ Response:
 
 
 ## Metrics: /oauth/metrics
-Get the contents of the user's metrics pane--including resting heart rate, step counts, etc.--with
+Get the contents of the user's metrics pane--including resting heart rate, step counts, risk scores, etc--with
 the /oauth/metrics URI:
 
 ```
