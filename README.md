@@ -5,7 +5,7 @@ integration partner -- welcome! We're excited to work with you. Feel free to ema
 connect@cardiogr.am with any questions.
 
 
-## Getting Started
+# Getting Started
 
 You should have received a client id and client secret from us, likely for both your development
 and production environments. Note that each client id and client secret will only work with a
@@ -54,7 +54,7 @@ The response will include both a Cardiogram user id and an auth code, which can 
 as described below in "Exchanging an auth code for OAuth 2 tokens".
 
 
-# Requesting data from an existing Cardiogram user
+## Requesting data from an existing Cardiogram user
 
 Users explicitly choose to share data via a dialog that explains what they're sharing and
 with whom, similar to the Signing in with Google. To obtain the user's consent,
@@ -70,7 +70,7 @@ to your redirect URI:
 You can then exchange this auth code for tokens as described in the next section.
 
 
-# Exchanging an auth code for OAuth2 tokens.
+## Exchanging an auth code for OAuth2 tokens.
 
 To exchange the **auth code** for **access and refresh tokens**, post to the /oauth/token URI.
 Note that your OAuth2 library may abstract the below token exchange process,
