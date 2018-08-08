@@ -28,11 +28,11 @@ calls.
 
 ## Creating a new user account
 
-To create a new user account, post to `/heart/oauth/users/new` with a `memberId` (a stable identifier
+To create a new user account, post to `/heart/oauth/users` with a `memberId` (a stable identifier
 used by your system):
 
 ```
-POST https://cardiogr.am/heart/oauth/users/new
+POST https://cardiogr.am/heart/oauth/users
 
 Headers
   Authorization: 'Basic <Base64-encoded ClientId:ClientSecret>'
@@ -102,12 +102,12 @@ following API endpoints on behalf of that particular user.
 
 # API Endpoints
 
-## Posting heart rate data: /oauth/users/beats/new
+## Posting heart rate data: /oauth/users/beats
 
-You can post heart rate data from a wearable device for a particular user using the `/oauth/users/beats/new` URI:
+You can post heart rate data from a wearable device for a particular user using the `/oauth/users/beats` URI:
 
 ```
-POST https://cardiogr.am/heart/oauth/users/beats/new
+POST https://cardiogr.am/heart/oauth/users/beats
 
 Headers
   Authorization: Bearer <ACCESS_TOKEN>
@@ -146,16 +146,16 @@ Body: {"User does not exist."}
 Status Code: 403
 Body: {"Forbidden: 'memberId' does not match access token."}
 ```
+Note that, for heart rate data derived from Apple HealthKit, `start` will equal `end`.
 
-Note that only the `start` field will be considered as the timestamp for a particular heart rate. The `end` is included for simplicity as this is the format that HealthKit uses.
 
 
-## Posting step count data: /oauth/users/steps/new
+## Posting step count data: /oauth/users/steps
 
-Post step counts for a user by using the `/oauth/users/steps/new` URI:
+Post step counts for a user by using the `/oauth/users/steps` URI:
 
 ```
-POST https://cardiogr.am/heart/oauth/users/steps/new
+POST https://cardiogr.am/heart/oauth/users/steps
 
 Headers
   Authorization: Bearer <ACCESS_TOKEN>
@@ -197,14 +197,14 @@ Status Code: 403
 Body: {"Forbidden: 'memberId' does not match access token."}
 ```
 
-## Posting covariates /oauth/users/covariates/new:
+## Posting covariates /oauth/users/covariates
 
 In order to generate risk scores, we require a certain set of covariates -- age, sex,
 heart-rate-modifying medications like beta blockers, and so on -- that influence the way our
-system interprets the user's heart rate data. You can post these via `/heart/oauth/users/covariates/new`:
+system interprets the user's heart rate data. You can post these via `/heart/oauth/users/covariates`:
 
 ```
-POST https://cardiogr.am/heart/oauth/users/covariates/new
+POST https://cardiogr.am/heart/oauth/users/covariates
 
 Headers
   Authorization: Bearer <ACCESS_TOKEN>
@@ -239,13 +239,13 @@ Status Code: 403
 Body: {"Forbidden: 'memberId' does not match access token."}
 ```
 
-## Getting risk scores /oauth/users/risk_scores/get
+## Getting risk scores /oauth/users/risk_scores
 After we've received sufficient data for a particular user, we will begin producing risk scores for a particular user. However, risk scores will not be immediately retrievable upon posting the data. Because we need to receive sufficient data and run them through our models, there may be a few day delay between posting data and getting risk scores.
 
-Once you have an access token, and have provided data about the user, you can issue an HTTP request to `/oauth/users/risk_scores/get` to get risk scores for the user.
+Once you have an access token, and have provided data about the user, you can issue an HTTP request to `/oauth/users/risk_scores` to get risk scores for the user.
 
 ```
-GET https://cardiogr.am/heart/oauth/users/risk_scores/get
+GET https://cardiogr.am/heart/oauth/users/risk_scores
 
 Headers
   Authorization: Bearer <ACCESS_TOKEN>
@@ -259,16 +259,16 @@ Status Code: 200
 Body: {
   modelVersion: <model_version> 'abc123',
   date: <date_of_scoring> 2018-08-02,
-  diabetes: <risk_percentile> 80% // %-tile compared across all available users.
-  sleep_apnea: <risk_percentile> 56%
-  hypertension: <risk_percentile> 89%
+  diabetes: <risk_percentile> 80.0 // %-tile compared across all available users.
+  sleep_apnea: <risk_percentile> 56.0
+  hypertension: <risk_percentile> 89.0
 }
 
 Status Code: 400
-Body: {"Insufficient data for prediction."}
+Body: { error: "Insufficient data for prediction."}
 
 Status Code: 400
-Body: {"Risk scores not available yet."}
+Body: { error: "Risk scores not available yet."}
 ```
 
 
