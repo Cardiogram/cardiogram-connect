@@ -18,7 +18,7 @@ const axios = require('axios');
 const CARDIOGRAM_BASE_URI = 'https://cardiogr.am';
 const CLIENT_ID = process.env.CLIENT_ID || 'CardiogramConnectDemo_Prod';
 const CLIENT_SECRET = process.env.CLIENT_SECRET || '';
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 9000;
 
 const server = express();
 /**
@@ -49,7 +49,7 @@ server.get('/oauth/callback', async (req, res) => {
   // Once we retrieve the `auth code`, we can excahnge it for an accessToken which is used
   // to request data on the users' behalf.
   const { refreshToken } = await exchangeAuthCodeForTokens(code);
-  // Here's an example of refreshing your last accessToken
+  // Here's an example of refreshing your last accessToken.
   const { accessToken } = await refreshAccessToken(refreshToken);
   // Let's use this new accessToken to now get some metrics for this user.
   const metrics = await getMetrics(accessToken);
@@ -94,6 +94,9 @@ function exchangeAuthCodeForTokens(code) {
           refreshToken: response.data.refresh_token,
         };
       })
+      .catch((error) => {
+        console.error('Error exchanging authCode for tokens:', error);
+      })
   );
 }
 
@@ -123,7 +126,10 @@ function refreshAccessToken(refreshToken) {
     .post(`${CARDIOGRAM_BASE_URI}/heart/oauth/token`, requestBody, {
       headers: requestHeaders,
     })
-    .then((response) => ({ accessToken: response.data.access_token }));
+    .then((response) => ({ accessToken: response.data.access_token }))
+    .catch((error) => {
+      console.error('Error refreshing access token:', error);
+    });
 }
 
 /**

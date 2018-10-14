@@ -6,8 +6,48 @@
     <meta name="theme-color" content="#000000">
     <title>Cardiogram Connect Test Server</title>
     <style>
-      .card {
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background-color: #f6f8fd;
+      }
 
+      main {
+        padding-top: 70px;
+        max-width: 500px;
+        margin: 0 auto;
+        font-family: "SF UI Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        line-height: 1.5;
+        color: #626a73;
+      }
+
+      .card {
+        padding: 30px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 2px, rgba(0, 0, 0, 0.04) 0px 5px 12px;
+      }
+
+      h1 {
+        color: #3b475f;
+        line-height: 1.2;
+        margin-top: 0;
+      }
+
+      .button {
+        display: block;
+        padding: 0 30px;
+        color: #FFF;
+        background-color: #FF543B;
+        font-weight: 600;
+        text-align: center;
+        font-size: 11px;
+        line-height: 40px;
+        letter-spacing: .1rem;
+        text-transform: uppercase;
+        text-decoration: none;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
       }
     </style>
   </head>
@@ -17,13 +57,13 @@
         <h1>Kai's Heart-Rate Spikin' Ice Cream Truck</h1>
         <p>We're trying to figure out which ice cream flavors get your heart rate racing. Click
       below to connect your Cardiogram account.</p>
-        <a class="button" href="https://cardiogr.am/auth?response_type=code&client_id=CardiogramConnectDemo_Prod&redirect_uri=http://localhost:5000/oauth/callback">
+        <a class="button" href="http://localhost:5000/auth?response_type=code&client_id=CardiogramConnectDemo_Local&redirect_uri=http://localhost:9000/oauth/callback">
           Connect with Cardiogram
         </a>
         <p class="subtitle">
           <strong>Note</strong>: This is a demo server to show how the Cardiogram Connect partner
                 API works. If you're here and don't know what Cardiogram Connect is, then email
-                connect@cardiogr.am.
+                <a href="mailto:connect@cardiogr.am">connect@cardiogr.am</a>.
         </p>
       </div>
     </main>
