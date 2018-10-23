@@ -38,7 +38,7 @@ Headers
   Content-Type: 'application/x-www-form-urlencoded'
 
 Body:
-  memberId : <string_member_id>
+  memberId: <String> Member ID to identify with your system
 ```
 
 **Response**:
@@ -47,8 +47,8 @@ Body:
 Status Code: 200 // Success.
 Body:
   {
-    userId: <unique_integer>
-    code: <unique_access_code_string>
+    userId: <String> Cardiogram User ID
+    code: <String> Your `AUTH_CODE` used to exchange for auth tokens
   }
 
 Status Code: 400
@@ -146,7 +146,7 @@ Status Code: 400
 Body: {message: "User does not exist."}
 
 Status Code: 403
-Body: {message: "memberId does not match access token."}
+Body: {message: "userId does not match access token."}
 ```
 
 Note that, for heart rate data derived from Apple HealthKit, `start` will equal `end`.
@@ -198,7 +198,7 @@ Status Code: 400
 Body: {message: "User does not exist."}
 
 Status Code: 403
-Body: {message: "memberId does not match access token."}
+Body: {message: "userId does not match access token."}
 ```
 
 ### Posting covariates /oauth/users/:userId/covariates
@@ -216,7 +216,6 @@ Headers
 
 Body:
   {
-    memberId: <String>
     dateOfBirth: <String> (YYYY-MM-DD)
     height: <String> (180 | 5'9")
     heightUnit: <Enum> ("cm" | "ft/in")
@@ -242,7 +241,7 @@ Status Code: 400
 Body: {message: "User does not exist."}
 
 Status Code: 403
-Body: {message: "memberId does not match access token."}
+Body: {message: "userId does not match access token."}
 ```
 
 ### Getting risk scores /oauth/users/:userId/risk_scores
@@ -270,9 +269,9 @@ Body:
   {
     riskScores: <Array>([
       {
-        modelVersion: <String> '1.0.0'
-        score: <Float> (Risk score percentile compared across all available users) - 80.0 
-        condition: <Enum> 
+        modelVersion: <String> ('1.0.0')
+        score: <Float> Risk score percentile compared across all available users (80.0)
+        condition: <Enum> (
         predictionTime: <UTC Timestamp in seconds>
         segmentStart: <UTC Timestamp in seconds>
         segmentEnd: <UTC Timestamp in seconds>
@@ -285,6 +284,9 @@ Body: { message: "Insufficient data for prediction."}
 
 Status Code: 400
 Body: { message: "Risk scores not available yet."}
+
+Status Code: 403
+Body: {message: "userId does not match access token."}
 ```
 
 ### Getting User Info: /oauth/users/:userId/basic_info
@@ -302,8 +304,7 @@ Response:
 
 ```
   {
-    id: <String>
-    (All other details are dependent on user permission grants)
+    (Details are dependent on user permission grants)
   }
 ```
 
@@ -322,8 +323,8 @@ Response:
 
 ```
   {
-    '2017-03-01': {RESTING_BPM: 76, STEPS: 9121, MOVE: 310, SLEEP_BPM: 52, AF_SCORE: 0.10, DIAB_SCORE: 0.78},
-    '2017-03-02': {RESTING_BPM: 74, STEPS: 13733, MOVE: 491, SLEEP_BPM: 51, AF_SCORE: 0.08, DIAB_SCORE: 0.13},
+    '2017-03-01': {RESTING_BPM: 76, STEPS: 9121, MOVE: 310, SLEEP_BPM: 52},
+    '2017-03-02': {RESTING_BPM: 74, STEPS: 13733, MOVE: 491, SLEEP_BPM: 51},
     ...
   }
 ```
