@@ -4,6 +4,9 @@ API Documentation and example code for Cardiogram Connect. If you're here, you'r
 integration partner -- welcome! We're excited to work with you. Feel free to email
 connect@cardiogr.am with any questions.
 
+> The request and response examples 
+follow the convention of `<key>: <type> <description> (<examples>)`
+
 ## Getting Started
 
 You should have received a `client id` and `client secret` from us, likely for both your development
@@ -27,8 +30,8 @@ that can be used in subsequent API calls.
 
 ### Creating a new user account
 
-To create a new user account, post to `/heart/oauth/users` with a `memberId` (a stable identifier
-used by your system):
+To create a new Cardiogram account on behalf of your member, post to `/heart/oauth/users` with a 
+`memberId` (a stable identifier used by your system):
 
 ```
 POST https://cardiogr.am/heart/oauth/users
@@ -44,7 +47,8 @@ Body:
 **Response**:
 
 ```
-Status Code: 200 // Success.
+Status Code: 200
+Response-Type: 'json'
 Body:
   {
     userId: <String> Cardiogram User ID
@@ -97,6 +101,18 @@ Body:
 
 You'll receive a response with an `access_token` field, which you can use to access any of the
 following API endpoints on behalf of that particular user.
+
+**Response**:
+
+```
+Status Code: 200
+Response-Type: 'json'
+Body:
+  {
+    access_token: <String> 
+    refresh_token: <String> 
+  }
+```
 
 ## API Endpoints
 
@@ -271,7 +287,7 @@ Body:
       {
         modelVersion: <String> ('1.0.0')
         score: <Float> Risk score percentile compared across all available users (80.0)
-        condition: <Enum> (
+        condition: <Enum> ('diabetes' | 'sleepApnea' | 'hbp' | 'afib')
         predictionTime: <UTC Timestamp in seconds>
         segmentStart: <UTC Timestamp in seconds>
         segmentEnd: <UTC Timestamp in seconds>
