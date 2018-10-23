@@ -102,12 +102,12 @@ following API endpoints on behalf of that particular user.
 
 > Note: These API endpoints and documentation are still in progress
 
-### Posting heart rate data: /oauth/users/beats
+### Posting heart rate data: /oauth/users/:userId/beats
 
 Add heart rate data from a wearable device for a particular user:
 
 ```
-POST https://cardiogr.am/heart/oauth/users/beats
+POST https://cardiogr.am/heart/oauth/users/:userId/beats
 
 Headers
   Authorization: Bearer <ACCESS_TOKEN>
@@ -117,9 +117,9 @@ Body:
   {
     beats: <Array>([
       {
-        start: <UTC timestamp in seconds>,
-        end: <UTC timestamp in seconds>,
-        value: <float heart rate>,
+        start: <UTC Timestamp in seconds>,
+        end: <UTC Timestamp in seconds>,
+        value: <Float>,
       }
     ])
   }
@@ -151,12 +151,12 @@ Body: {message: "memberId does not match access token."}
 
 Note that, for heart rate data derived from Apple HealthKit, `start` will equal `end`.
 
-### Posting step count data: /oauth/users/steps
+### Posting step count data: /oauth/users/:userId/steps
 
 Add step counts for a user:
 
 ```
-POST https://cardiogr.am/heart/oauth/users/steps
+POST https://cardiogr.am/heart/oauth/users/:userId/steps
 
 Headers
   Authorization: Bearer <ACCESS_TOKEN>
@@ -166,9 +166,9 @@ Body:
   {
     steps: <Array>([
       {
-        start: <UTC timestamp in seconds>,
-        end: <UTC timestamp in seconds>,
-        value: <integer step count>,
+        start: <UTC Timestamp in seconds>,
+        end: <UTC Timestamp in seconds>,
+        value: <Float>,
       }
     ])
   }
@@ -201,14 +201,14 @@ Status Code: 403
 Body: {message: "memberId does not match access token."}
 ```
 
-### Posting covariates /oauth/users/covariates
+### Posting covariates /oauth/users/:userId/covariates
 
 In order to generate risk scores, we require a certain set of covariates -- age, sex,
 heart-rate-modifying medications like beta blockers, and so on -- that influence the way our
 system interprets the user's heart rate data.
 
 ```
-POST https://cardiogr.am/heart/oauth/users/covariates
+POST https://cardiogr.am/heart/oauth/users/:userId/covariates
 
 Headers
   Authorization: Bearer <ACCESS_TOKEN>
@@ -216,13 +216,14 @@ Headers
 
 Body:
   {
-    memberId: <string>,
-    dateOfBirth: <string> (YYYY-MM-DD),
-    height: <string>, (180 | 5'9"),
-    heightUnit: <enum "cm" | "ft/in">
-    weight: <string>, (140 | 65)
-    weightUnit: <enum "lb" | "kg">
-    sex: <enum "Male" | "Female">,
+    memberId: <String>
+    dateOfBirth: <String> (YYYY-MM-DD)
+    height: <String> (180 | 5'9")
+    heightUnit: <Enum> ("cm" | "ft/in")
+    weight: <String> (140 | 65)
+    weightUnit: <Enum> ("lb" | "kg")
+    sex: <Enum> ("Male" | "Female")
+    isOnBetaBlocker: <Boolean>
   }
 ```
 
@@ -244,7 +245,7 @@ Status Code: 403
 Body: {message: "memberId does not match access token."}
 ```
 
-### Getting risk scores /oauth/users/risk_scores
+### Getting risk scores /oauth/users/:userId/risk_scores
 
 After we've received sufficient data for a particular user, we will begin producing risk scores for
 a particular user.
@@ -253,7 +254,7 @@ Note: Risk scores may not be immediately retrievable upon posting the data since
 receive sufficient data for our model predictions.
 
 ```
-GET https://cardiogr.am/heart/oauth/users/risk_scores
+GET https://cardiogr.am/heart/oauth/users/:userId/risk_scores
 
 Headers
   Authorization: Bearer <ACCESS_TOKEN>
@@ -267,11 +268,16 @@ with a single field containing the error message:
 Status Code: 200
 Body:
   {
-    modelVersion: <string> '1.0.0',
-    date: <string> 2018-08-02 (YYYY-MM-DD),
-    diabetes: <number> 80.0 (Risk score percentile compared across all available users)
-    sleep_apnea: <number> 56.0
-    hypertension: <number> 89.0
+    riskScores: <Array>([
+      {
+        modelVersion: <String> '1.0.0'
+        score: <Float> (Risk score percentile compared across all available users) - 80.0 
+        condition: <Enum> 
+        predictionTime: <UTC Timestamp in seconds>
+        segmentStart: <UTC Timestamp in seconds>
+        segmentEnd: <UTC Timestamp in seconds>
+      }
+    ])
   }
 
 Status Code: 400
@@ -281,12 +287,12 @@ Status Code: 400
 Body: { message: "Risk scores not available yet."}
 ```
 
-### Getting User Info: /oauth/users/basic_info
+### Getting User Info: /oauth/users/:userId/basic_info
 
 Retrieve basic profile information about a particular user:
 
 ```
-GET https://cardiogr.am/oauth/users/basic_info
+GET https://cardiogr.am/oauth/users/:userId/basic_info
 
 Headers:
   Authorization: Bearer <ACCESS_TOKEN>
@@ -296,17 +302,17 @@ Response:
 
 ```
   {
-    id: <string>
+    id: <String>
     (All other details are dependent on user permission grants)
   }
 ```
 
-### Getting metrics and risk scores: /oauth/users/metrics
+### Getting metrics and risk scores: /oauth/users/:userId/metrics
 
 You can get the contents of the user's metrics pane -- including resting heart rate, step count:
 
 ```
-GET https://cardiogr.am/oauth/users/metrics
+GET https://cardiogr.am/oauth/users/:userId/metrics
 
 Headers:
   Authorization: Bearer <ACCESS_TOKEN>
