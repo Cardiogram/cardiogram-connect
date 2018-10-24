@@ -217,7 +217,7 @@ Status Code: 403
 Body: {message: "userId does not match access token."}
 ```
 
-### Posting covariates /oauth/users/:userId/covariates
+### Posting covariates: /oauth/users/:userId/covariates
 
 In order to generate risk scores, we require a certain set of covariates -- age, sex,
 heart-rate-modifying medications like beta blockers, and so on -- that influence the way our
@@ -260,7 +260,47 @@ Status Code: 403
 Body: {message: "userId does not match access token."}
 ```
 
-### Getting risk scores /oauth/users/:userId/risk_scores
+### Getting basic user information: /oauth/users/:userId/basic_info
+
+Retrieve basic profile information about a particular user:
+
+```
+GET https://cardiogr.am/oauth/users/:userId/basic_info
+
+Headers:
+  Authorization: Bearer <ACCESS_TOKEN>
+```
+
+Response:
+
+```
+  {
+    (Details are dependent on user permission grants)
+  }
+```
+
+### Getting user metrics: /oauth/users/:userId/metrics
+
+You can get the contents of the user's metrics pane -- including resting heart rate, step count:
+
+```
+GET https://cardiogr.am/oauth/users/:userId/metrics
+
+Headers:
+  Authorization: Bearer <ACCESS_TOKEN>
+```
+
+Response:
+
+```
+  {
+    '2017-03-01': {RESTING_BPM: 76, STEPS: 9121, MOVE: 310, SLEEP_BPM: 52},
+    '2017-03-02': {RESTING_BPM: 74, STEPS: 13733, MOVE: 491, SLEEP_BPM: 51},
+    ...
+  }
+```
+
+### Getting risk scores: /oauth/users/:userId/risk_scores
 
 After we've received sufficient data for a particular user, we will begin producing risk scores for
 a particular user.
@@ -305,45 +345,31 @@ Status Code: 403
 Body: {message: "userId does not match access token."}
 ```
 
-### Getting User Info: /oauth/users/:userId/basic_info
+### Risk score callback url
 
-Retrieve basic profile information about a particular user:
-
-```
-GET https://cardiogr.am/oauth/users/:userId/basic_info
-
-Headers:
-  Authorization: Bearer <ACCESS_TOKEN>
-```
-
-Response:
+Along with the ability to retrieve risk scores for a particular user, Cardiogram will also make a 
+POST request to a specified callback url with Risk Scores whenever we generate them. 
 
 ```
+POST <your callback url>
+Body:
   {
-    (Details are dependent on user permission grants)
+    apiKey: <The Cardiogram API key you give us>
+    riskScores: <Array>([
+      {
+        modelVersion: <String> ('1.0.0')
+        score: <Float> Risk score percentile compared across all available users (80.0)
+        condition: <Enum> ('diabetes' | 'sleepApnea' | 'hbp' | 'afib')
+        predictionTime: <UTC Timestamp in seconds>
+        segmentStart: <UTC Timestamp in seconds>
+        segmentEnd: <UTC Timestamp in seconds>
+      }
+    ])
   }
 ```
+To acknowledge receipt of a callback, your endpoint should return a `2xx HTTP status code`. All response codes outside this range, including 3xx codes, will indicate that you did not receive the callback. Cardiogram will ignore any other information returned in the request headers or request body.
 
-### Getting metrics and risk scores: /oauth/users/:userId/metrics
-
-You can get the contents of the user's metrics pane -- including resting heart rate, step count:
-
-```
-GET https://cardiogr.am/oauth/users/:userId/metrics
-
-Headers:
-  Authorization: Bearer <ACCESS_TOKEN>
-```
-
-Response:
-
-```
-  {
-    '2017-03-01': {RESTING_BPM: 76, STEPS: 9121, MOVE: 310, SLEEP_BPM: 52},
-    '2017-03-02': {RESTING_BPM: 74, STEPS: 13733, MOVE: 491, SLEEP_BPM: 51},
-    ...
-  }
-```
+We will attempt to deliver your webhooks for up to three days with an exponential back off.
 
 ## Example Code
 
