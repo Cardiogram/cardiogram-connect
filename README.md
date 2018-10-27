@@ -1,4 +1,4 @@
-# Read Me
+# Cardiogram Connect
 
 API Documentation and example code for Cardiogram Connect. If you're here, you're likely an integration partner -- welcome! We're excited to work with you. Feel free to email connect@cardiogr.am with any questions.
 
@@ -231,7 +231,7 @@ Status Code: 403
 Body: {message: "userId does not match access token."}
 ```
 
-### Getting basic user information: /oauth/users/:userId/basic\_info
+### Getting basic user information: /oauth/users/:userId/basic_info
 
 Retrieve basic profile information about a particular user:
 
@@ -271,7 +271,7 @@ Response:
   }
 ```
 
-### Getting risk scores: /oauth/users/:userId/risk\_scores
+### Getting risk scores: /oauth/users/:userId/risk_scores
 
 After we've received sufficient data for a particular user, we will begin producing risk scores for a particular user.
 
@@ -345,4 +345,3 @@ We've written a sample project, using Node.js, under the `examples` folder. You 
 1. Install [Node.js](https://nodejs.org/en/)
 2. Download and install this repository with `npm install`
 3. To start the demo server: `npm run start -- --CLIENT_SECRET=<YOUR_CLIENT_SECRET>`
-
