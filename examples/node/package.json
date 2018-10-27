@@ -1,0 +1,11 @@
+{
+  "name": "cardiogram-connect-node-demo",
+  "version": "1.0.0",
+  "description": "Node.js example code to use the Cardiogram Connect OAuth2 API",
+  "main": "simple-server.js",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.16.4"
+  }
+}
