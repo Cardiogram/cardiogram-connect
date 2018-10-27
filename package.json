@@ -17,12 +17,6 @@
   "bugs": {
     "url": "https://github.com/Cardiogram/CardiogramConnect/issues"
   },
-  "scripts": {
-    "postinstall": "npm i --prefix examples/node",
-    "start": "NODE_ENV=production node examples/node/simple-server",
-    "dev": "nodemon examples/node/simple-server",
-    "test": "echo \"No test specified\" && exit 0"
-  },
   "devDependencies": {
     "eslint": "5.6.1",
     "eslint-config-airbnb": "17.1.0",
