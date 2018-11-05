@@ -1,5 +1,7 @@
 # Cardiogram Connect
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Cardiogram/cardiogram-connect.svg?token=eb44dcaa6e1f409fa636c3bf4647151d7d807028e4b1eb6ac5da707fcef38e0f&ts=1541401109312)](https://greenkeeper.io/)
+
 API Documentation and example code for Cardiogram Connect. If you're here, you're likely an integration partner -- welcome! We're excited to work with you. Feel free to email connect@cardiogr.am with any questions.
 
 > The request and response examples follow the convention of `<key>: <type> <description> (<examples>)`
