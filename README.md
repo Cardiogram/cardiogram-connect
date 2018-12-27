@@ -21,7 +21,7 @@ In either case, the next step is then to exchange the temporary auth code for OA
 To create a new Cardiogram account on behalf of your member, post to `/heart/oauth/users` with a `memberId` \(a stable identifier used by your system\):
 
 ```text
-POST https://cardiogr.am/heart/oauth/users
+POST https://cardiogr.am/heart/oauth/users/new
 
 Headers
   Authorization: 'Basic <Base64-encoded ClientId:ClientSecret>'
@@ -73,9 +73,7 @@ Headers
   Content-Type: 'application/x-www-form-urlencoded'
 
 Body:
-  grantType: 'authorization_code',
-  clientId: <YOUR_CLIENT_ID>,
-  clientSecret: <YOUR_CLIENT_SECRET>,
+  grant_type: 'authorization_code',
   code: <AUTH_CODE>,
 ```
 
@@ -88,8 +86,10 @@ Status Code: 200
 Response-Type: 'json'
 Body:
   {
+    token_type: "bearer"
     access_token: <String>
     refresh_token: <String>
+    expires_in: <Number>
   }
 ```
 
