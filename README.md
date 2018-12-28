@@ -28,7 +28,8 @@ Headers
   Content-Type: 'application/x-www-form-urlencoded'
 
 Body:
-  memberId: <String> Member ID to identify with your system
+  memberId: <String> Unique identifier with your system
+  email: <String> Email address of the user
 ```
 
 **Response**:
