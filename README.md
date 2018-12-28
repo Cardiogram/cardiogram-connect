@@ -18,7 +18,7 @@ In either case, the next step is then to exchange the temporary auth code for OA
 
 ### Creating a new user account
 
-To create a new Cardiogram account on behalf of your member, post to `/heart/oauth/users` with a `memberId` \(a stable identifier used by your system\):
+To create a new Cardiogram account on behalf of your member, post to `/heart/oauth/users/new` with a `memberId` \(a stable identifier used by your system\):
 
 ```text
 POST https://cardiogr.am/heart/oauth/users/new
