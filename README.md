@@ -54,7 +54,7 @@ The response will include both a Cardiogram `userId` and an authorization `code`
 
 Users explicitly choose to share data via a dialog that explains what they're sharing and with whom, similar to the "Sign in with Google." To obtain the user's consent, send them to the auth URL with your client id and redirect URI:
 
-`https://cardiogr.am/auth?response_type=code&client_id=<YOUR_CLIENT_ID>&redirect_uri=<YOUR_REDIRECT_URI>/&scope=cardiograms`
+`https://cardiogr.am/auth?response_type=code&client_id=<YOUR_CLIENT_ID>&redirect_uri=<YOUR_REDIRECT_URI>`
 
 If the user clicks on "Yes, Share my data," you'll receive an temporary auth code as a parameter to your redirect URI:
 
