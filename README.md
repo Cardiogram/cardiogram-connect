@@ -18,17 +18,18 @@ In either case, the next step is then to exchange the temporary auth code for OA
 
 ### Creating a new user account
 
-To create a new Cardiogram account on behalf of your member, post to `/heart/oauth/users` with a `memberId` \(a stable identifier used by your system\):
+To create a new Cardiogram account on behalf of your member, post to `/heart/oauth/users/new` with a `memberId` \(a stable identifier used by your system\):
 
 ```text
-POST https://cardiogr.am/heart/oauth/users
+POST https://cardiogr.am/heart/oauth/users/new
 
 Headers
   Authorization: 'Basic <Base64-encoded ClientId:ClientSecret>'
   Content-Type: 'application/x-www-form-urlencoded'
 
 Body:
-  memberId: <String> Member ID to identify with your system
+  memberId: <String> Unique identifier with your system
+  email: <String> Email address of the user
 ```
 
 **Response**:
@@ -53,7 +54,7 @@ The response will include both a Cardiogram `userId` and an authorization `code`
 
 Users explicitly choose to share data via a dialog that explains what they're sharing and with whom, similar to the "Sign in with Google." To obtain the user's consent, send them to the auth URL with your client id and redirect URI:
 
-`https://cardiogr.am/auth?response_type=code&client_id=<YOUR_CLIENT_ID>&redirect_uri=<YOUR_REDIRECT_URI>/&scope=cardiograms`
+`https://cardiogr.am/auth?response_type=code&client_id=<YOUR_CLIENT_ID>&redirect_uri=<YOUR_REDIRECT_URI>`
 
 If the user clicks on "Yes, Share my data," you'll receive an temporary auth code as a parameter to your redirect URI:
 
@@ -73,9 +74,7 @@ Headers
   Content-Type: 'application/x-www-form-urlencoded'
 
 Body:
-  grantType: 'authorization_code',
-  clientId: <YOUR_CLIENT_ID>,
-  clientSecret: <YOUR_CLIENT_SECRET>,
+  grant_type: 'authorization_code',
   code: <AUTH_CODE>,
 ```
 
@@ -88,8 +87,10 @@ Status Code: 200
 Response-Type: 'json'
 Body:
   {
+    token_type: "bearer"
     access_token: <String>
     refresh_token: <String>
+    expires_in: <Number>
   }
 ```
 
