@@ -1,4 +1,0 @@
-# Posting Covariates
-
-
-
