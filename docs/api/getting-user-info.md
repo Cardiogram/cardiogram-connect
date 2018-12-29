@@ -1,10 +1,6 @@
----
-description: >-
-  Once you have your `access_token`, you may start retrieving user data from
-  Cardiogram
----
-
 # Getting User Info
+
+Once you have your `access_token`, you may start retrieving user data from Cardiogram
 
 {% api-method method="get" host="https://cardiogr.am" path="/oauth/users/:user\_id/basic\_info" %}
 {% api-method-summary %}
@@ -19,7 +15,7 @@ This endpoint allows you to retrieve basic user info including covariates
 {% api-method-request %}
 {% api-method-path-parameters %}
 {% api-method-parameter name="id" type="string" required=true %}
-/oauth/users/1/`basic_info`
+`/oauth/users/1/basic_info`
 {% endapi-method-parameter %}
 {% endapi-method-path-parameters %}
 

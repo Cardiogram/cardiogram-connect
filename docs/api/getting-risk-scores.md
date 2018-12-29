@@ -4,11 +4,13 @@ description: >-
   Cardiogram
 ---
 
-# Getting User Risk Scores
+# Getting Risk Scores
 
-{% api-method method="get" host="https://cardiogr.am" path="/oauth/users/:user\_id/basic\_info" %}
+Once you have your `access_token`, you may start retrieving user data from Cardiogram
+
+{% api-method method="get" host="https://cardiogr.am" path="/oauth/users/:user\_id/risk\_scores" %}
 {% api-method-summary %}
-Get User Info
+Get User Risk Scores
 {% endapi-method-summary %}
 
 {% api-method-description %}
@@ -19,7 +21,7 @@ This endpoint allows you to retrieve basic user info including covariates
 {% api-method-request %}
 {% api-method-path-parameters %}
 {% api-method-parameter name="id" type="string" required=true %}
-/oauth/users/1/`basic_info`
+`/oauth/users/1/risk_scores`
 {% endapi-method-parameter %}
 {% endapi-method-path-parameters %}
 
@@ -37,17 +39,26 @@ Cake successfully retrieved.
 {% endapi-method-response-example-description %}
 
 ```javascript
-{
-  "dateOfBirth": "" // <String> (YYYY-MM-DD)
-  "height": "175" // <String>
-  "heightUnit": "cm" // <Enum> ("cm" | "ft/in")
-  "weight": "65" // <String>
-  "weightUnit": "kg" // <Enum> ("lb" | "kg")
-  "sex": "Male" // <Enum> ("Male" | "Female")
-  "isOnBetaBlocker": false // <Boolean>
-}
+[
+  {
+    modelVersion: // <String> ('1.0.0')
+    score: // <Float> Risk score percentile compared across all available users (80.0)
+    condition: // <Enum> ('diabetes' | 'sleepApnea' | 'hbp' | 'afib')
+    predictionTime: // <Timestamp>
+    segmentStart: // <Timestamp>
+    segmentEnd: // <Timestamp>
+  }
+  ...
+]
 ```
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
+
+{% hint style="info" %}
+_Response Timestamps are in UTC seconds_
+{% endhint %}
+
+
+
