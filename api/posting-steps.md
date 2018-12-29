@@ -4,42 +4,43 @@ description: >-
   Cardiogram for us to generate Risk Scores.
 ---
 
-# Posting Beats
+# Posting Steps
 
-{% api-method method="post" host="https://cardiogr.am" path="/heart/oauth/users/:userId/beats" %}
+{% api-method method="post" host="https://cardiogr.am" path="/heart/oauth/users/:userId/steps" %}
 {% api-method-summary %}
-Add heart rate data to user
+Add step count data to user
 {% endapi-method-summary %}
 
 {% api-method-description %}
-The beats endpoint helps store user heart rate
+The steps endpoint helps store user step count
 {% endapi-method-description %}
 
 {% api-method-spec %}
 {% api-method-request %}
 {% api-method-path-parameters %}
 {% api-method-parameter name="userId" type="string" required=true %}
-`/oauth/users/1/beats`
+`/oauth/users/1/steps`
 {% endapi-method-parameter %}
 {% endapi-method-path-parameters %}
 
 {% api-method-headers %}
 {% api-method-parameter name="Authentication" type="string" required=true %}
-`Bearer <access_token>`  
+`Bearer <access_token>`
 {% endapi-method-parameter %}
 {% endapi-method-headers %}
 
 {% api-method-body-parameters %}
-{% api-method-parameter name="Beats" type="object" required=true %}
-`{  
-  beats: <Array>[  
-    {  
-      start: <Timestamp>  
+{% api-method-parameter name="Steps" type="object" required=true %}
+`{   
+  steps: <Array>[  
+    {   
+      start: <Timestamp>     
       end: <Timestamp>  
       value: <Float>  
     }  
   ]  
-}`  
+}`   
+  
 _Timestamps are UTC time in seconds_
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
@@ -48,7 +49,7 @@ _Timestamps are UTC time in seconds_
 {% api-method-response %}
 {% api-method-response-example httpCode=200 %}
 {% api-method-response-example-description %}
-Beats successfully saved.
+Steps successfully saved.
 {% endapi-method-response-example-description %}
 
 ```javascript
@@ -64,35 +65,36 @@ Couldn't parse body content
 ```javascript
 // One of the following messages:
 { "message": "Malformed input." }
-{ "message": "Heart rates contain negative value." }
+{ "message": "Step values contain negative value." }
 { "message": "Timestamps ('start' or 'end') are not in UNIX seconds" }
+{ "message": "End time greater than start time for a step data point." }
 ```
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
 
-#### Code Sample:
+## Code Sample:
 
 {% tabs %}
 {% tab title="cURL" %}
 ```bash
-curl --location --request POST "https://cardiogr.am/heart/oauth/users/1/beats" \
+curl --location --request POST "https://cardiogr.am/heart/oauth/users/1/steps" \
   --header "Content-Type: application/json" \
-  --data "{ \"beats\": [{ \"start\": 1546025628, \"end\": 1546025628, \"value\": 60 }, { \"start\": 1546025701, \"end\": 1546025701, \"value\": 62 }] }"
+  --data "{ \"steps\": [{ \"start\": 1546025622, \"end\": 1546025820, \"value\": 105 }] }"
 ```
 {% endtab %}
 
 {% tab title="JavaScript" %}
 ```javascript
 var settings = {
-  "url": "https://cardiogr.am/heart/oauth/users/1/beats",
+  "url": "https://cardiogr.am/heart/oauth/users/1/steps",
   "method": "POST",
   "timeout": 0,
   "headers": {
     "Content-Type": "application/json"
   },
-  "data": "{ \"beats\": [{ \"start\": 1546025628, \"end\": 1546025628, \"value\": 60 }, { \"start\": 1546025701, \"end\": 1546025701, \"value\": 62 }] }",
+  "data": "{ \"steps\": [{ \"start\": 1546025622, \"end\": 1546025820, \"value\": 105 }] }",
 };
 $.ajax(settings).done(function (response) {
   console.log(response);
@@ -103,8 +105,8 @@ $.ajax(settings).done(function (response) {
 {% tab title="Python" %}
 ```python
 import requests
-url = 'https://cardiogr.am/heart/oauth/users/1/beats'
-payload = "{ \"beats\": [{ \"start\": 1546025628, \"end\": 1546025628, \"value\": 60 }, { \"start\": 1546025701, \"end\": 1546025701, \"value\": 62 }] }"
+url = 'https://cardiogr.am/heart/oauth/users/1/steps'
+payload = "{ \"steps\": [{ \"start\": 1546025622, \"end\": 1546025820, \"value\": 105 }] }"
 headers = {
   'Content-Type': 'application/json'
 }
@@ -118,13 +120,13 @@ print(response.text)
 require "uri"
 require "net/http"
 
-url = URI("https://cardiogr.am/heart/oauth/users/1/beats")
+url = URI("https://cardiogr.am/heart/oauth/users/1/steps")
 
 http = Net::HTTP.new(url.host, url.port)
 
 request = Net::HTTP::Post.new(url)
 request["Content-Type"] = "application/json"
-request.body = "{ \"beats\": [{ \"start\": 1546025628, \"end\": 1546025628, \"value\": 60 }, { \"start\": 1546025701, \"end\": 1546025701, \"value\": 62 }] }"
+request.body = "{ \"steps\": [{ \"start\": 1546025622, \"end\": 1546025820, \"value\": 105 }] }"
 
 response = http.request(request)
 puts response.read_body
@@ -138,7 +140,7 @@ puts response.read_body
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => "https://cardiogr.am/heart/oauth/users/1/beats",
+  CURLOPT_URL => "https://cardiogr.am/heart/oauth/users/1/steps",
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
@@ -146,7 +148,7 @@ curl_setopt_array($curl, array(
   CURLOPT_FOLLOWLOCATION => false,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => "POST",
-  CURLOPT_POSTFIELDS =>"{ \"beats\": [{ \"start\": 1546025628, \"end\": 1546025628, \"value\": 60 }, { \"start\": 1546025701, \"end\": 1546025701, \"value\": 62 }] }",
+  CURLOPT_POSTFIELDS =>"{ \"steps\": [{ \"start\": 1546025622, \"end\": 1546025820, \"value\": 105 }] }",
   CURLOPT_HTTPHEADER => array(
     "Content-Type: application/json"
   ),
@@ -180,10 +182,10 @@ import (
 
 func main() {
 
-  url := "https://cardiogr.am/heart/oauth/users/1/beats"
+  url := "https://cardiogr.am/heart/oauth/users/1/steps"
   method := "POST"
 
-  payload := strings.NewReader("{ \"beats\": [{ \"start\": 1546025628, \"end\": 1546025628, \"value\": 60 }, { \"start\": 1546025701, \"end\": 1546025701, \"value\": 62 }] }")
+  payload := strings.NewReader("{ \"steps\": [{ \"start\": 1546025622, \"end\": 1546025820, \"value\": 105 }] }")
 
   client := &http.Client {
     CheckRedirect: func(req *http.Request, via []*http.Request) error {

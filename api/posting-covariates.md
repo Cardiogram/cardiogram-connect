@@ -4,22 +4,22 @@ description: >-
   Cardiogram for us to generate Risk Scores.
 ---
 
-# Posting Steps
+# Posting Covariates
 
-{% api-method method="post" host="https://cardiogr.am" path="/heart/oauth/users/:userId/steps" %}
+{% api-method method="post" host="https://cardiogr.am" path="/heart/oauth/users/:userId/covariates" %}
 {% api-method-summary %}
-Add step count data to user
+Add covariate data to user
 {% endapi-method-summary %}
 
 {% api-method-description %}
-The steps endpoint helps store user step count
+The covariates endpoint helps store user metadata such as date of birth, weight, height, sex, and whether they're on beta blockers.
 {% endapi-method-description %}
 
 {% api-method-spec %}
 {% api-method-request %}
 {% api-method-path-parameters %}
 {% api-method-parameter name="userId" type="string" required=true %}
-`/oauth/users/1/steps`
+`/oauth/users/1/covariates`
 {% endapi-method-parameter %}
 {% endapi-method-path-parameters %}
 
@@ -30,16 +30,23 @@ The steps endpoint helps store user step count
 {% endapi-method-headers %}
 
 {% api-method-body-parameters %}
-{% api-method-parameter name="Steps" type="object" required=true %}
-`{
-  steps: <Array>[
-    {
-      start: <Timestamp>
-      end: <Timestamp>
-      value: <Float>
-    }
-  ]
-}`
+{% api-method-parameter name="Covariates" type="object" required=true %}
+`{   
+  dateOfBirth: <String>  
+    (YYYY-MM-DD)  
+  height: <String>  
+    (180 | 5'9")  
+  heightUnit: <Enum>  
+    ("cm" | "ft/in")  
+  weight: <String>  
+    (140 | 65)  
+  weightUnit: <Enum>  
+    ("lb" | "kg")  
+  sex: <Enum>  
+    ("Male" | "Female")  
+  isOnBetaBlocker: <Boolean>  
+}`   
+  
 _Timestamps are UTC time in seconds_
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
@@ -73,27 +80,41 @@ Couldn't parse body content
 {% endapi-method-spec %}
 {% endapi-method %}
 
-#### Code Sample:
+## Code Sample:
 
 {% tabs %}
 {% tab title="cURL" %}
 ```bash
-curl --location --request POST "https://cardiogr.am/heart/oauth/users/1/steps" \
+curl --location --request POST "https://cardiogr.am/heart/oauth/users/1/covariates" \
   --header "Content-Type: application/json" \
-  --data "{ \"steps\": [{ \"start\": 1546025622, \"end\": 1546025820, \"value\": 105 }] }"
+  --data "{
+    \"dateOfBirth\": \"1980-01-01\",
+    \"height\": \"175\",
+    \"heightUnit\": \"cm\",
+    \"weight\": \"70\",
+    \"weightUnit\": \"kg\",
+    \"isOnBetaBlocker\": false
+  }"
 ```
 {% endtab %}
 
 {% tab title="JavaScript" %}
 ```javascript
 var settings = {
-  "url": "https://cardiogr.am/heart/oauth/users/1/steps",
+  "url": "https://cardiogr.am/heart/oauth/users/1/covariates",
   "method": "POST",
   "timeout": 0,
   "headers": {
     "Content-Type": "application/json"
   },
-  "data": "{ \"steps\": [{ \"start\": 1546025622, \"end\": 1546025820, \"value\": 105 }] }",
+  "data": "{
+    \"dateOfBirth\": \"1980-01-01\",
+    \"height\": \"175\",
+    \"heightUnit\": \"cm\",
+    \"weight\": \"70\",
+    \"weightUnit\": \"kg\",
+    \"isOnBetaBlocker\": false
+  }",
 };
 $.ajax(settings).done(function (response) {
   console.log(response);
@@ -104,8 +125,15 @@ $.ajax(settings).done(function (response) {
 {% tab title="Python" %}
 ```python
 import requests
-url = 'https://cardiogr.am/heart/oauth/users/1/steps'
-payload = "{ \"steps\": [{ \"start\": 1546025622, \"end\": 1546025820, \"value\": 105 }] }"
+url = 'https://cardiogr.am/heart/oauth/users/1/covariates'
+payload = "{
+  \"dateOfBirth\": \"1980-01-01\",
+  \"height\": \"175\",
+  \"heightUnit\": \"cm\",
+  \"weight\": \"70\",
+  \"weightUnit\": \"kg\",
+  \"isOnBetaBlocker\": false
+}"
 headers = {
   'Content-Type': 'application/json'
 }
@@ -119,13 +147,20 @@ print(response.text)
 require "uri"
 require "net/http"
 
-url = URI("https://cardiogr.am/heart/oauth/users/1/steps")
+url = URI("https://cardiogr.am/heart/oauth/users/1/covariates")
 
 http = Net::HTTP.new(url.host, url.port)
 
 request = Net::HTTP::Post.new(url)
 request["Content-Type"] = "application/json"
-request.body = "{ \"steps\": [{ \"start\": 1546025622, \"end\": 1546025820, \"value\": 105 }] }"
+request.body = "{
+  \"dateOfBirth\": \"1980-01-01\",
+  \"height\": \"175\",
+  \"heightUnit\": \"cm\",
+  \"weight\": \"70\",
+  \"weightUnit\": \"kg\",
+  \"isOnBetaBlocker\": false
+}"
 
 response = http.request(request)
 puts response.read_body
@@ -139,7 +174,7 @@ puts response.read_body
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => "https://cardiogr.am/heart/oauth/users/1/steps",
+  CURLOPT_URL => "https://cardiogr.am/heart/oauth/users/1/covariates",
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
@@ -147,7 +182,14 @@ curl_setopt_array($curl, array(
   CURLOPT_FOLLOWLOCATION => false,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => "POST",
-  CURLOPT_POSTFIELDS =>"{ \"steps\": [{ \"start\": 1546025622, \"end\": 1546025820, \"value\": 105 }] }",
+  CURLOPT_POSTFIELDS =>"{
+    \"dateOfBirth\": \"1980-01-01\",
+    \"height\": \"175\",
+    \"heightUnit\": \"cm\",
+    \"weight\": \"70\",
+    \"weightUnit\": \"kg\",
+    \"isOnBetaBlocker\": false
+  }",
   CURLOPT_HTTPHEADER => array(
     "Content-Type: application/json"
   ),
@@ -181,10 +223,17 @@ import (
 
 func main() {
 
-  url := "https://cardiogr.am/heart/oauth/users/1/steps"
+  url := "https://cardiogr.am/heart/oauth/users/1/covariates"
   method := "POST"
 
-  payload := strings.NewReader("{ \"steps\": [{ \"start\": 1546025622, \"end\": 1546025820, \"value\": 105 }] }")
+  payload := strings.NewReader("{
+    \"dateOfBirth\": \"1980-01-01\",
+    \"height\": \"175\",
+    \"heightUnit\": \"cm\",
+    \"weight\": \"70\",
+    \"weightUnit\": \"kg\",
+    \"isOnBetaBlocker\": false
+  }")
 
   client := &http.Client {
     CheckRedirect: func(req *http.Request, via []*http.Request) error {
@@ -207,3 +256,4 @@ func main() {
 ```
 {% endtab %}
 {% endtabs %}
+
