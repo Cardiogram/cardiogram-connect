@@ -4,7 +4,7 @@ API Documentation and example code for Cardiogram Connect. If you're here, you'r
 
 ## Getting Started
 
-You should have received a `client id` and `client secret` from us, likely for both your development and production environments. 
+You should have received a `client id` and `client secret` from us, likely for both your development and production environments.
 
 > Note that each client id and client secret will only work with a particular redirect URI on your system.
 
@@ -18,4 +18,3 @@ You can find the full documentation on [https://connect.cardiogr.am/-LUqgg5f45f7
 2. [API Reference](api/)
 3. [FAQ](faq/)
 4. [Changelog](changelog.md)
-
