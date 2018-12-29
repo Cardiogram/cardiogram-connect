@@ -6,6 +6,8 @@ description: >-
 
 # Posting Steps
 
+Once you have your `access_token`, you may start adding user data to Cardiogram in order to generate Risk Scores
+
 {% api-method method="post" host="https://cardiogr.am" path="/heart/oauth/users/:userId/steps" %}
 {% api-method-summary %}
 Add step count data to user

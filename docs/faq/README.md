@@ -1,12 +1,14 @@
 # FAQ
 
-## Can I become who I want to be?
+## What is Cardiogram Connect?
 
-That's a tough question but thankfully, our team is on it. Please bear with us while we're investigating.
+Cardiogram Connect allows you to generate RiskScores for your users by leveraging DeepHeart, our machine learning platform. 
 
-## Have you had a chance to answer the previous question?
+You can see our scientific results at [https://cardiogr.am/research/](https://cardiogr.am/research/)
 
-Yes, after a few months we finally found the answer. Sadly, Mike is on vacations right now so I'm afraid we are not able to provide the answer at this point.
+## How do I get in touch?
+
+Feel free to contact us directly at [connect@cardiogr.am](mailto:connect@cardiogr.am)
 
 
 

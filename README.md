@@ -14,8 +14,9 @@ If you need to support additional testing redirect URIs, please email [connect@c
 
 You can find the full documentation on [https://connect.cardiogr.am/-LUqgg5f45f7j1lJrotU/](https://connect.cardiogr.am/-LUqgg5f45f7j1lJrotU/)
 
-1. [Getting Started](api/authentication.md)
-2. [API Reference](api/)
-3. [FAQ](faq/)
-4. [Changelog](changelog.md)
+1. [Getting Started](docs/api/authentication.md)
+2. [API Reference](docs/api/)
+3. [FAQ](docs/faq/)
+4. [Example Code](docs/faq/sample.md)
+5. [Changelog](docs/changelog.md)
 

@@ -1,10 +1,6 @@
----
-description: >-
-  Once you have your `access_token`, you may start passing user data to
-  Cardiogram for us to generate Risk Scores.
----
-
 # Posting Beats
+
+Once you have your `access_token`, you may start adding user data to Cardiogram in order to generate Risk Scores
 
 {% api-method method="post" host="https://cardiogr.am" path="/heart/oauth/users/:userId/beats" %}
 {% api-method-summary %}

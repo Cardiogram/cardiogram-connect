@@ -6,6 +6,8 @@ description: >-
 
 # Posting Covariates
 
+Once you have your `access_token`, you may start adding user data to Cardiogram in order to generate Risk Scores
+
 {% api-method method="post" host="https://cardiogr.am" path="/heart/oauth/users/:userId/covariates" %}
 {% api-method-summary %}
 Add covariate data to user
@@ -45,9 +47,7 @@ The covariates endpoint helps store user metadata such as date of birth, weight,
   sex: <Enum>  
     ("Male" | "Female")  
   isOnBetaBlocker: <Boolean>  
-}`   
-  
-_Timestamps are UTC time in seconds_
+}` 
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
 {% endapi-method-request %}
